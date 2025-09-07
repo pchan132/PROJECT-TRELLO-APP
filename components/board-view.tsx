@@ -874,10 +874,7 @@ export function BoardView({ boardId }: BoardViewProps) {
   const testSupabaseConnection = async () => {
     try {
       console.log("🧪 Testing Supabase connection...");
-      const { error } = await supabase
-        .from("cards")
-        .select("count")
-        .limit(1);
+      const { error } = await supabase.from("cards").select("count").limit(1);
 
       if (error) {
         console.error("❌ Supabase connection test failed:", error);
@@ -1043,7 +1040,9 @@ export function BoardView({ boardId }: BoardViewProps) {
         id: cardToDelete.id,
         title: cardToDelete.title,
         column_id: cardToDelete.column_id,
-        board_user_id: (cardToDelete.columns as { boards?: { user_id: string } })?.boards?.user_id,
+        board_user_id: (
+          cardToDelete.columns as { boards?: { user_id: string } }
+        )?.boards?.user_id,
       });
 
       // Ask for confirmation
@@ -1402,8 +1401,8 @@ export function BoardView({ boardId }: BoardViewProps) {
                   Deleting Board
                 </h3>
                 <p className="text-sm text-gray-600 dark:text-gray-300">
-                  Please wait while we delete &quot;{board?.title}&quot; and all its
-                  content...
+                  Please wait while we delete &quot;{board?.title}&quot; and all
+                  its content...
                 </p>
               </div>
             </div>
