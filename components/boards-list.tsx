@@ -15,6 +15,7 @@ export function BoardsList() {
   const [loading, setLoading] = useState(true);
   const [creatingBoard, setCreatingBoard] = useState(false);
   const [showAddBoard, setShowAddBoard] = useState(false);
+  const [user, setUser] = useState<any>(null);
   const router = useRouter();
 
   useEffect(() => {
@@ -33,8 +34,11 @@ export function BoardsList() {
         data: { user },
       } = await supabase.auth.getUser();
 
+      setUser(user);
+
       if (!user) {
-        router.push("/auth/login");
+        // Don't redirect, just show welcome screen
+        setBoards([]);
         return;
       }
 
@@ -68,6 +72,7 @@ export function BoardsList() {
       } = await supabase.auth.getUser();
 
       if (!user) {
+        alert("Please login first");
         router.push("/auth/login");
         return;
       }
@@ -178,6 +183,79 @@ export function BoardsList() {
     return (
       <div className="flex items-center justify-center min-h-screen">
         <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-500"></div>
+      </div>
+    );
+  }
+
+  // Show welcome screen for users who are not logged in
+  if (!user) {
+    return (
+      <div className="container mx-auto px-4 py-8">
+        <div className="text-center py-16">
+          <div className="mx-auto w-24 h-24 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center mb-6">
+            <User className="w-12 h-12 text-blue-500" />
+          </div>
+          <h2 className="text-3xl font-bold text-gray-800 dark:text-white mb-4">
+            Welcome to Trello Clone
+          </h2>
+          <p className="text-gray-600 dark:text-gray-300 mb-8 max-w-2xl mx-auto text-lg">
+            Organize anything, together. Trello boards, lists, and cards enable
+            you to organize and prioritize your projects in a fun, flexible, and
+            rewarding way.
+          </p>
+          <div className="flex gap-4 justify-center">
+            <Button
+              onClick={() => router.push("/auth/login")}
+              className="bg-blue-600 hover:bg-blue-700 px-8 py-3 text-lg"
+            >
+              Sign In
+            </Button>
+            <Button
+              onClick={() => router.push("/auth/sign-up")}
+              variant="outline"
+              className="border-blue-600 text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900 px-8 py-3 text-lg"
+            >
+              Sign Up
+            </Button>
+          </div>
+          <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+            <div className="text-center">
+              <div className="mx-auto w-16 h-16 bg-green-100 dark:bg-green-900 rounded-full flex items-center justify-center mb-4">
+                <Plus className="w-8 h-8 text-green-500" />
+              </div>
+              <h3 className="text-xl font-semibold text-gray-800 dark:text-white mb-2">
+                Create Boards
+              </h3>
+              <p className="text-gray-600 dark:text-gray-300">
+                Create boards to organize your projects and collaborate with
+                your team.
+              </p>
+            </div>
+            <div className="text-center">
+              <div className="mx-auto w-16 h-16 bg-purple-100 dark:bg-purple-900 rounded-full flex items-center justify-center mb-4">
+                <Calendar className="w-8 h-8 text-purple-500" />
+              </div>
+              <h3 className="text-xl font-semibold text-gray-800 dark:text-white mb-2">
+                Track Progress
+              </h3>
+              <p className="text-gray-600 dark:text-gray-300">
+                Move cards across lists to track progress and keep everyone
+                updated.
+              </p>
+            </div>
+            <div className="text-center">
+              <div className="mx-auto w-16 h-16 bg-orange-100 dark:bg-orange-900 rounded-full flex items-center justify-center mb-4">
+                <User className="w-8 h-8 text-orange-500" />
+              </div>
+              <h3 className="text-xl font-semibold text-gray-800 dark:text-white mb-2">
+                Collaborate
+              </h3>
+              <p className="text-gray-600 dark:text-gray-300">
+                Work together seamlessly with your team members in real-time.
+              </p>
+            </div>
+          </div>
+        </div>
       </div>
     );
   }
