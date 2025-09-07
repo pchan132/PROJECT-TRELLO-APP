@@ -33,7 +33,6 @@ export function BoardView({ boardId }: BoardViewProps) {
   const [editingBoard, setEditingBoard] = useState(false);
   const [editBoardTitle, setEditBoardTitle] = useState("");
   const [editBoardDescription, setEditBoardDescription] = useState("");
-  const [activeId, setActiveId] = useState<string | null>(null);
   const [draggedCard, setDraggedCard] = useState<CardData | null>(null);
   const [showAddColumn, setShowAddColumn] = useState(false);
   const [showAddCard, setShowAddCard] = useState<string | null>(null);
@@ -49,7 +48,7 @@ export function BoardView({ boardId }: BoardViewProps) {
 
   useEffect(() => {
     fetchBoardData();
-  }, [boardId]);
+  }, [boardId]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const fetchBoardData = async () => {
     try {
@@ -134,7 +133,6 @@ export function BoardView({ boardId }: BoardViewProps) {
 
   const handleDragStart = (event: DragStartEvent) => {
     const activeId = event.active.id as string;
-    setActiveId(activeId);
 
     // Store the original card data before any state changes
     const originalCard = findCard(activeId);
@@ -160,7 +158,6 @@ export function BoardView({ boardId }: BoardViewProps) {
 
   const handleDragEnd = async (event: DragEndEvent) => {
     const { active, over } = event;
-    setActiveId(null);
 
     if (!over) {
       console.log("No drop target found");
@@ -384,7 +381,7 @@ export function BoardView({ boardId }: BoardViewProps) {
 
       // Now proceed with database operations
       console.log("🔌 Testing Supabase connection...");
-      const { data: connectionTest, error: connectionError } = await supabase
+      const { error: connectionError } = await supabase
         .from("cards")
         .select("count")
         .limit(1);
@@ -394,8 +391,6 @@ export function BoardView({ boardId }: BoardViewProps) {
         alert(`Database connection error: ${connectionError.message}`);
         return;
       }
-
-      console.log("✅ Supabase connection successful");
 
       // Check user authentication
       console.log("👤 Checking user authentication...");
@@ -879,7 +874,7 @@ export function BoardView({ boardId }: BoardViewProps) {
   const testSupabaseConnection = async () => {
     try {
       console.log("🧪 Testing Supabase connection...");
-      const { data, error } = await supabase
+      const { error } = await supabase
         .from("cards")
         .select("count")
         .limit(1);
@@ -1048,7 +1043,7 @@ export function BoardView({ boardId }: BoardViewProps) {
         id: cardToDelete.id,
         title: cardToDelete.title,
         column_id: cardToDelete.column_id,
-        board_user_id: (cardToDelete.columns as any)?.boards?.user_id,
+        board_user_id: (cardToDelete.columns as { boards?: { user_id: string } })?.boards?.user_id,
       });
 
       // Ask for confirmation
@@ -1407,7 +1402,7 @@ export function BoardView({ boardId }: BoardViewProps) {
                   Deleting Board
                 </h3>
                 <p className="text-sm text-gray-600 dark:text-gray-300">
-                  Please wait while we delete "{board?.title}" and all its
+                  Please wait while we delete &quot;{board?.title}&quot; and all its
                   content...
                 </p>
               </div>

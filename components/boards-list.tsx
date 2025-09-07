@@ -12,7 +12,6 @@ import {
   User,
   AlertCircle,
   Trash2,
-  MoreVertical,
 } from "lucide-react";
 import { AddBoardDialog } from "./add-board-dialog";
 import { hasEnvVars } from "@/lib/utils";
@@ -30,6 +29,7 @@ export function BoardsList() {
     } else {
       setLoading(false);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const fetchBoards = async () => {

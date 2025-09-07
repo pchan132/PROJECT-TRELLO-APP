@@ -5,7 +5,6 @@ import {
   DndContext,
   DragEndEvent,
   DragOverEvent,
-  DragStartEvent,
   closestCorners,
 } from "@dnd-kit/core";
 import { arrayMove } from "@dnd-kit/sortable";
@@ -89,12 +88,11 @@ export function Board() {
     initialColumns
   );
 
-  const [activeId, setActiveId] = useState<string | null>(null);
   const [showAddColumn, setShowAddColumn] = useState(false);
   const [showAddCard, setShowAddCard] = useState<string | null>(null);
 
-  const handleDragStart = (event: DragStartEvent) => {
-    setActiveId(event.active.id as string);
+  const handleDragStart = () => {
+    // Drag start handler
   };
 
   const handleDragOver = (event: DragOverEvent) => {
@@ -146,7 +144,6 @@ export function Board() {
 
   const handleDragEnd = (event: DragEndEvent) => {
     const { active, over } = event;
-    setActiveId(null);
 
     if (!over) return;
 
@@ -159,8 +156,6 @@ export function Board() {
     if (!activeCard) return;
 
     const overCard = findCard(overId);
-    const overColumn = findColumn(overId);
-
     if (overCard && activeCard.columnId === overCard.columnId) {
       // Reordering within the same column
       setColumns((prev) => {
@@ -256,6 +251,7 @@ export function Board() {
               onAddCard={() => setShowAddCard(column.id)}
               onDeleteColumn={deleteColumn}
               onDeleteCard={deleteCard}
+              onEditCard={() => {}} // Empty function for now
             />
           ))}
 
