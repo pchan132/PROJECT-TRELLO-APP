@@ -6,15 +6,9 @@ import { Card } from "./ui/card";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 // import { Textarea } from "./ui/textarea";
-import { MoreHorizontal, Trash2, Edit, Save, X } from "lucide-react";
+import { Trash2, Edit, Save, X } from "lucide-react";
 import { CardType } from "./board";
 import { useState } from "react";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "./ui/dropdown-menu";
 
 interface CardItemProps {
   card: CardType;

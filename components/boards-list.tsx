@@ -6,14 +6,7 @@ import { createClient } from "@/lib/supabase/client";
 import { BoardData } from "@/lib/types";
 import { Button } from "./ui/button";
 import { Card } from "./ui/card";
-import {
-  Plus,
-  Calendar,
-  User,
-  AlertCircle,
-  Trash2,
-  MoreVertical,
-} from "lucide-react";
+import { Plus, Calendar, User, AlertCircle, Trash2 } from "lucide-react";
 import { AddBoardDialog } from "./add-board-dialog";
 import { hasEnvVars } from "@/lib/utils";
 
@@ -30,6 +23,7 @@ export function BoardsList() {
     } else {
       setLoading(false);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const fetchBoards = async () => {
