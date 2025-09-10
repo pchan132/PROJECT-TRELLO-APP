@@ -9,13 +9,14 @@ import { Card } from "./ui/card";
 import { Plus, Calendar, User, AlertCircle, Trash2 } from "lucide-react";
 import { AddBoardDialog } from "./add-board-dialog";
 import { hasEnvVars } from "@/lib/utils";
+import type { User as SupabaseUser } from "@supabase/supabase-js";
 
 export function BoardsList() {
   const [boards, setBoards] = useState<BoardData[]>([]);
   const [loading, setLoading] = useState(true);
   const [creatingBoard, setCreatingBoard] = useState(false);
   const [showAddBoard, setShowAddBoard] = useState(false);
-  const [user, setUser] = useState<any>(null);
+  const [user, setUser] = useState<SupabaseUser | null>(null);
   const router = useRouter();
 
   useEffect(() => {
@@ -24,7 +25,6 @@ export function BoardsList() {
     } else {
       setLoading(false);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const fetchBoards = async () => {
