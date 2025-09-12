@@ -1457,7 +1457,7 @@ export function BoardView({ boardId }: BoardViewProps) {
           onDragEnd={handleDragEnd}
           collisionDetection={closestCorners}
         >
-          <div className="flex gap-6 overflow-x-auto pb-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 overflow-x-auto pb-6">
             {columns.map((column) => (
               <Column
                 key={column.id}

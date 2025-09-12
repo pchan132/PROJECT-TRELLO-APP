@@ -150,7 +150,7 @@ export function BoardsList() {
 
   if (!hasEnvVars) {
     return (
-      <div className="container mx-auto px-4 py-8">
+      <div className="container mx-auto px-4 py-8 ">
         <div className="text-center py-16">
           <div className="mx-auto w-24 h-24 bg-orange-100 dark:bg-orange-900 rounded-full flex items-center justify-center mb-4">
             <AlertCircle className="w-12 h-12 text-orange-500" />

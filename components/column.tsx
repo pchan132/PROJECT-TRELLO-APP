@@ -56,7 +56,7 @@ export function Column({
         </DropdownMenu>
       </div>
 
-      <div ref={setNodeRef} className="min-h-[200px] space-y-3">
+      <div ref={setNodeRef} className="min-h-auto space-y-3">
         <SortableContext
           items={column.cards.map((card) => card.id)}
           strategy={verticalListSortingStrategy}
